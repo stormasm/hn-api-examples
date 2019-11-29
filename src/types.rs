@@ -70,7 +70,7 @@ pub struct Story {
     /// The item's unique id.
     pub id: u32,
     /// The total comment count.
-    pub descendants: u32,
+    pub descendants: Option<u32>,
     /// The username of the item's author.
     pub by: Option<String>,
     /// The ids of the item's comments, in ranked display order.
