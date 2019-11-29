@@ -1,7 +1,15 @@
 
-This case is breaking the code...
+This null case is breaking the code...
 
-Missing the **by** field
+Eventually I need to deal with this case,
+but for now lets keep going with other
+issues.
+
+https://hacker-news.firebaseio.com/v0/item/21664126.json?print=pretty
+
+
+
+These issues have been addressed...
 
 https://hacker-news.firebaseio.com/v0/item/21654193.json?print=pretty
 
