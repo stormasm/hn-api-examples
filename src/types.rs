@@ -99,7 +99,7 @@ pub struct Comment {
     /// The comment's parent: either another comment or the relevant story.
     pub parent: u32,
     /// The comment text. HTML.
-    pub text: String,
+    pub text: Option<String>,
     /// Creation date of the item, in Unix Time.
     pub time: u64,
 }
