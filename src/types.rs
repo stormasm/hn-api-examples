@@ -55,10 +55,10 @@ impl Item {
     /// Return the author of this item, if available.
     pub fn author(&self) -> Option<&str> {
         match self {
-            Item::Story(story) => Some(&story.by),
-            Item::Comment(comment) => Some(&comment.by),
-            Item::Poll(poll) => Some(&poll.by),
-            Item::Pollopt(pollopt) => Some(&pollopt.by),
+            Item::Story(story) => Some(&story.by.as_ref().unwrap()),
+            Item::Comment(comment) => Some(&comment.by.as_ref().unwrap()),
+            Item::Poll(poll) => Some(&poll.by.as_ref().unwrap()),
+            Item::Pollopt(pollopt) => Some(&pollopt.by.as_ref().unwrap()),
             _ => None,
         }
     }
@@ -72,7 +72,7 @@ pub struct Story {
     /// The total comment count.
     pub descendants: u32,
     /// The username of the item's author.
-    pub by: String,
+    pub by: Option<String>,
     /// The ids of the item's comments, in ranked display order.
     pub kids: Option<Vec<u32>>,
     /// The story's score.
@@ -93,7 +93,7 @@ pub struct Comment {
     /// The item's unique id.
     pub id: u32,
     /// The username of the item's author.
-    pub by: String,
+    pub by: Option<String>,
     /// The ids of the item's comments, in ranked display order.
     pub kids: Option<Vec<u32>>,
     /// The comment's parent: either another comment or the relevant story.
@@ -127,7 +127,7 @@ pub struct Poll {
     /// The item's unique id.
     pub id: u32,
     /// The username of the item's author.
-    pub by: String,
+    pub by: Option<String>,
     /// The total comment count.
     pub descendants: u32,
     /// The ids of the item's comments, in ranked display order.
@@ -150,7 +150,7 @@ pub struct Pollopt {
     /// The item's unique id.
     pub id: u32,
     /// The username of the item's author.
-    pub by: String,
+    pub by: Option<String>,
     /// The pollopt's associated poll.
     pub poll: u32,
     /// The votes for a pollopt.
