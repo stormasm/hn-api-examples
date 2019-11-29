@@ -2,7 +2,7 @@ use hn_api::HnClient;
 
 fn print(api: &HnClient, items: &[u32]) {
     for id in items {
-        println!("id = {}",id);
+        println!("id = {}", id);
         let _item = api.get_item(*id).unwrap().unwrap();
 
         // let item = api.get_item(*id).to_string();
@@ -43,10 +43,10 @@ fn main() {
     // let top = [21663922];
 
     // working job
-    let top = [21655200];
+    // let top = [21655200];
 
     // breaking deleted
-    // let top = [21654193];
+    let top = [21665489];
     let count = 1;
 
     print(&api, &top[..count]);
