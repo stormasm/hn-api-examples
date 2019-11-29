@@ -25,9 +25,20 @@ impl Item {
         match self {
             Item::Story(story) => story.id,
             Item::Comment(comment) => comment.id,
-            Item::Job(job) =>job.id,
+            Item::Job(job) => job.id,
             Item::Poll(poll) => poll.id,
             Item::Pollopt(pollopt) => pollopt.id,
+        }
+    }
+
+    /// Return the type of this item
+    pub fn item_type(&self) -> String {
+        match self {
+            Item::Story(_story) => "story".to_string(),
+            Item::Comment(_comment) => "comment".to_string(),
+            Item::Job(_job) => "job".to_string(),
+            Item::Poll(_poll) => "poll".to_string(),
+            Item::Pollopt(_pollopt) => "pollopt".to_string(),
         }
     }
 
@@ -285,5 +296,4 @@ mod tests {
         let _pollopt: Pollopt = serde_json::from_str(&json).unwrap();
         let _item: Item = serde_json::from_str(&json).unwrap();
     }
-
 }
