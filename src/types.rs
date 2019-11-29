@@ -45,9 +45,9 @@ impl Item {
     /// Return the title of this item, if available.
     pub fn title(&self) -> Option<&str> {
         match self {
-            Item::Story(story) => Some(&story.title),
-            Item::Job(job) => Some(&job.title),
-            Item::Poll(poll) => Some(&poll.title),
+            Item::Story(story) => Some(&story.title.as_ref().unwrap()),
+            Item::Job(job) => Some(&job.title.as_ref().unwrap()),
+            Item::Poll(poll) => Some(&poll.title.as_ref().unwrap()),
             _ => None,
         }
     }
@@ -76,9 +76,9 @@ pub struct Story {
     /// The ids of the item's comments, in ranked display order.
     pub kids: Option<Vec<u32>>,
     /// The story's score.
-    pub score: u32,
+    pub score: Option<u32>,
     /// The title of the story.
-    pub title: String,
+    pub title: Option<String>,
     /// The URL of the story.
     pub url: Option<String>,
     /// The story text. HTML.
@@ -116,7 +116,7 @@ pub struct Job {
     /// Creation date of the item, in Unix Time.
     pub time: u64,
     /// The title of the job.
-    pub title: String,
+    pub title: Option<String>,
     /// The URL of the story.
     pub url: Option<String>,
 }
@@ -137,7 +137,7 @@ pub struct Poll {
     /// The story's score.
     pub score: u32,
     /// The title of the story.
-    pub title: String,
+    pub title: Option<String>,
     /// The story text. HTML.
     pub text: Option<String>,
     /// Creation date of the item, in Unix Time.
