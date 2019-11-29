@@ -22,9 +22,11 @@ fn top_n_items(numofitems: u32, max_number: u32) -> Vec<u32> {
 fn main() {
     let api = HnClient::init().unwrap();
 
-    let max_item_id = api.get_max_item_id().unwrap();
+    // let max_item_id = api.get_max_item_id().unwrap();
+    // Instead of the max_item_id start with this item_id
+    let max_item_id = 21625360;
     println!("max item id = {}", max_item_id);
 
-    let item_ids = top_n_items(500, max_item_id);
+    let item_ids = top_n_items(10000, max_item_id);
     process_items(&api, item_ids);
 }
