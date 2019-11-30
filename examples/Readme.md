@@ -1,4 +1,25 @@
 
+Understand this code:
+
+```
+as_ref().unwrap()
+```
+
+from here:
+
+```
+/// Return the author of this item, if available.
+pub fn author(&self) -> Option<&str> {
+    match self {
+        Item::Story(story) => Some(&story.by.as_ref().unwrap()),
+        Item::Comment(comment) => Some(&comment.by.as_ref().unwrap()),
+        Item::Poll(poll) => Some(&poll.by.as_ref().unwrap()),
+        Item::Pollopt(pollopt) => Some(&pollopt.by.as_ref().unwrap()),
+        _ => None,
+    }
+}
+```
+
 This null case is breaking the code...
 
 Eventually I need to deal with this case,
