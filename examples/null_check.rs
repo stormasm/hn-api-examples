@@ -3,7 +3,7 @@
 use hn_api::types::Story;
 use hn_api::HnClient;
 
-fn print(api: &HnClient, items: &[u32]) {
+fn nullcheck(api: &HnClient, items: &[u32]) {
     for id in items {
         println!("\nid = {}\n", id);
 
@@ -26,5 +26,5 @@ fn main() {
         21669726, 21664126, 21672696, 21655779, 21672563, 21655225, 21669234,
     ];
     let count = 7;
-    print(&api, &top[..count]);
+    nullcheck(&api, &top[..count]);
 }
