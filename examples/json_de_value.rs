@@ -1,3 +1,4 @@
+use hn_api::types::Story;
 use hn_api::HnClient;
 
 fn print(api: &HnClient, items: &[u32]) {
@@ -5,7 +6,10 @@ fn print(api: &HnClient, items: &[u32]) {
         println!("id = {}", id);
 
         let item = api.get_json(*id).unwrap();
-        println!("{:?}",item);
+        println!("{:?}", item);
+
+        let story: Story = serde_json::from_str(&item).unwrap();
+        println!("\n{:?} {:?}", story.by.unwrap(), story.title.unwrap());
     }
 }
 
