@@ -55,6 +55,12 @@ impl HnClient {
         Ok(Self { client })
     }
 
+    /// Return the json only and do not do a serde json conversion
+    pub fn get_json(&self, id: u32) -> reqwest::Result<String> {
+        self.client
+            .get(&format!("{}/item/{}.json", API_BASE_URL, id)).send()?.text()
+    }
+
     /// Return the item with the specified id.
     ///
     /// May return `None` if item id is invalid.
