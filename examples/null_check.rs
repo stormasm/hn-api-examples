@@ -3,8 +3,8 @@
 use hn_api::types::Story;
 use hn_api::HnClient;
 
-fn nullcheck(api: &HnClient, items: Vec<u32>) {
-    for id in items {
+fn nullcheck(api: &HnClient, item_ids: Vec<u32>) {
+    for id in item_ids {
         println!("\nid = {}\n", id);
 
         let item = api.get_json(id).unwrap();
