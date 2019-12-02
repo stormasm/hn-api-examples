@@ -3,6 +3,24 @@ use hn_api::HnClient;
 
 fn process_items(api: &HnClient, item_ids: Vec<u32>) {
     for item_id in item_ids {
+        let item_json = api.get_json(item_id).unwrap();
+        match item_json.as_ref() {
+            "null" => println!("{} null", item_id),
+            _ => {
+                let item: Item = serde_json::from_str(&item_json).unwrap();
+                let item_type = item.item_type();
+                match item_type.as_ref() {
+                    "story" => println!("{} story", item_id),
+                    _ => {}
+                }
+            }
+        }
+    }
+}
+
+#[allow(dead_code)]
+fn process_items_old2(api: &HnClient, item_ids: Vec<u32>) {
+    for item_id in item_ids {
         // println!("\nid = {}\n", item_id);
 
         let item_json = api.get_json(item_id).unwrap();
@@ -25,7 +43,7 @@ fn process_items(api: &HnClient, item_ids: Vec<u32>) {
 }
 
 #[allow(dead_code)]
-fn process_items_old(api: &HnClient, item_ids: Vec<u32>) {
+fn process_items_old1(api: &HnClient, item_ids: Vec<u32>) {
     for item_id in &item_ids {
         let item = api.get_item(*item_id).unwrap().unwrap();
         println!("{} {}", item_id, item.item_type());
