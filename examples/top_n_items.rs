@@ -12,7 +12,12 @@ fn process_items(api: &HnClient, item_ids: Vec<u32>) {
             _ => {
                 // println!("{:?}", item_id);
                 let item: Item = serde_json::from_str(&item_json).unwrap();
-                println!("{} {}", item_id, item.item_type());
+                let item_type = item.item_type();
+                match item_type.as_ref() {
+                    "story" => println!("{} story", item_id),
+                    _ => {}
+                }
+                // println!("{} {}", item_id, );
                 // println!("\n{:?} {:?}", story.by.unwrap(), story.title.unwrap());
             }
         }
