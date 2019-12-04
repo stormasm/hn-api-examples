@@ -1,7 +1,7 @@
 use hn_api::types::Item;
 use hn_api::HnClient;
 use r2d2_redis::{r2d2, RedisConnectionManager};
-// use redis::Commands;
+use redis::Commands;
 
 fn write_json_to_redis(key: String, value: String) -> redis::RedisResult<()> {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
@@ -10,7 +10,7 @@ fn write_json_to_redis(key: String, value: String) -> redis::RedisResult<()> {
     let pool = pool.clone();
     let mut con = pool.get().unwrap();
 
-    //let _: () = con.set(key, value)?;
+    let _: () = con.set("hn-story-start", &key)?;
 
     let _x0 = redis::cmd("HSET")
         .arg("hn-story-19")
