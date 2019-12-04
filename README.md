@@ -16,9 +16,10 @@ lower bound will be calculated based on the number
 of ids you define you want to pull.
 
 The starting id can come from one of three places
+in order of selection.
 
-1) A number you pass into the code from which to start
-2) A number you read from a Redis key
+1) A number you read from a Redis key
+2) A number you pass into the code from which to start
 3) The max_item_id based on this code
 ```
     let max_item_id = api.get_max_item_id().unwrap();
