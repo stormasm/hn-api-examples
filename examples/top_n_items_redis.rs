@@ -1,7 +1,21 @@
 use hn_api::types::Item;
 use hn_api::HnClient;
 use r2d2_redis::{r2d2, RedisConnectionManager};
-use redis::Commands;
+// use redis::Commands;
+use redis::{Commands, RedisResult};
+
+fn get_redis_key(key: String) -> RedisResult<Option<u32>> {
+    let manager = RedisConnectionManager::new("redis://localhost").unwrap();
+    let pool = r2d2::Pool::builder().build(manager).unwrap();
+
+    let pool = pool.clone();
+    let mut con = pool.get().unwrap();
+
+    //let value = con.get(key)?;
+    //value
+
+    con.get(key)
+}
 
 fn write_json_to_redis(key: String, value: String) -> redis::RedisResult<()> {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
@@ -57,11 +71,26 @@ fn top_n_items(numofitems: u32, max_number: u32) -> Vec<u32> {
 fn main() {
     let api = HnClient::init().unwrap();
 
-    let max_item_id = api.get_max_item_id().unwrap();
-    // Instead of the max_item_id start with this item_id
-    // let max_item_id = 21625360;
-    println!("max item id = {}", max_item_id);
+    // Eventually this will be replaced by the start_switch
+    // Our first model will be start_switch_redis
+    // In the future it could be start_switch_sled
+    // Depending on where you are getting your data from
 
-    let item_ids = top_n_items(10000, max_item_id);
+    // let result: RedisResult<Option<f64>> = con.geo_dist("my_gis", PALERMO.2, "none", Unit::Meters);
+
+    let max_item_id: RedisResult<Option<u32>> = get_redis_key("hn-story-start".to_string());
+
+    // Instead of getting the max_item_id from redis
+    // get it from here
+    // let max_item_id = 21625360;
+
+    // If the above 2 locations are None then grab
+    // it from the hackernews api
+
+    // let max_item_id = api.get_max_item_id().unwrap();
+
+    // println!("max item id = {}", max_item_id);
+
+    let item_ids = top_n_items(10000, max_item_id.unwrap().unwrap());
     process_items(&api, item_ids);
 }
