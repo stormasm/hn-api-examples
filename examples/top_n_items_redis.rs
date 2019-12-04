@@ -4,6 +4,7 @@ use r2d2_redis::{r2d2, RedisConnectionManager};
 // use redis::Commands;
 use redis::{Commands, RedisResult};
 
+#[allow(dead_code)]
 fn get_redis_key(key: String) -> RedisResult<Option<u32>> {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
     let pool = r2d2::Pool::builder().build(manager).unwrap();
@@ -72,19 +73,20 @@ fn main() {
     // In the future it could be start_switch_sled
     // Depending on where you are getting your data from
 
-    let max_item_id: RedisResult<Option<u32>> = get_redis_key("hn-story-start".to_string());
+    let start_id_redis: RedisResult<Option<u32>> = get_redis_key("hn-story-start".to_string());
+    let start_id = start_id_redis.unwrap().unwrap();
 
-    // Instead of getting the max_item_id from redis
+    // Instead of getting the start_id from redis
     // get it from here
-    // let max_item_id = 21625360;
+    // let start_id = 21699763;
 
     // If the above 2 locations are None then grab
     // it from the hackernews api
 
-    // let max_item_id = api.get_max_item_id().unwrap();
+    // let start_id = api.get_max_item_id().unwrap();
 
-    // println!("max item id = {}", max_item_id);
+    println!("start id = {}", start_id);
 
-    let item_ids = top_n_items(10000, max_item_id.unwrap().unwrap());
+    let item_ids = top_n_items(10000, start_id);
     process_items(&api, item_ids);
 }
