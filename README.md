@@ -6,6 +6,8 @@ with the following added capabilities:
 
 * add in an item_type
 
+### Start Switch
+
 So the idea behind the start switch is to figure
 out where in the Hacker News feed you want to
 start grabbing ids.  For now the switch will only
