@@ -78,7 +78,7 @@ fn main() {
 
     // Instead of getting the start_id from redis
     // get it from here
-    // let start_id = 21699763;
+    // let start_id = 21698868;
 
     // If the above 2 locations are None then grab
     // it from the hackernews api
