@@ -23,6 +23,4 @@ The starting id can come from one of three places
 ```
 
 [Max Item Id](https://github.com/HackerNews/API#max-item-id)
-
-which is located here :   
-https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty
+which is [located here](https://hacker-news.firebaseio.com/v0/maxitem.json?print=pretty)
