@@ -10,14 +10,10 @@ fn get_redis_key(key: String) -> RedisResult<Option<u32>> {
 
     let pool = pool.clone();
     let mut con = pool.get().unwrap();
-
-    //let value = con.get(key)?;
-    //value
-
     con.get(key)
 }
 
-fn write_json_to_redis(key: String, value: String) -> redis::RedisResult<()> {
+fn write_json_to_redis(key: String, value: String) -> RedisResult<()> {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
     let pool = r2d2::Pool::builder().build(manager).unwrap();
 
@@ -75,8 +71,6 @@ fn main() {
     // Our first model will be start_switch_redis
     // In the future it could be start_switch_sled
     // Depending on where you are getting your data from
-
-    // let result: RedisResult<Option<f64>> = con.geo_dist("my_gis", PALERMO.2, "none", Unit::Meters);
 
     let max_item_id: RedisResult<Option<u32>> = get_redis_key("hn-story-start".to_string());
 
