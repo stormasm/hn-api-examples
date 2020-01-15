@@ -10,14 +10,14 @@ fn nullcheck(api: &HnClient, item_ids: Vec<u32>) {
         let item_json = api.get_json(item_id).unwrap();
 
         match item_json.as_ref() {
-            "null" => println!("{} null", item_id),
+            "null" => println!("\n{} null\n", item_id),
             _ => {
                 let item: Item = serde_json::from_str(&item_json).unwrap();
                 let item_type = item.item_type();
                 match item_type.as_ref() {
                     "story" => {
                         println!("{} story", item_id);
-                        println!("\n{:?}", item.title().unwrap());
+                        println!("{:?}", item.title().unwrap());
                         // let _ = write_json_to_redis(item_id.to_string(), item_json);
                     }
                     _ => {}
