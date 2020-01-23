@@ -42,8 +42,10 @@ fn nullcheck(api: &HnClient, item_ids: Vec<u32>) {
 */
 fn main() {
     let api = HnClient::init().unwrap();
+    // these ids work
+    // 21669726, 21664126, 21672696, 21655779, 21672563, 21655225, 21669234,
     let top = vec![
-        21669726, 21664126, 21672696, 21655779, 21672563, 21655225, 21669234,
+        21948540
     ];
     nullcheck(&api, top);
 }
