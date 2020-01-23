@@ -45,7 +45,12 @@ impl Item {
     /// Return the title of this item, if available.
     pub fn title(&self) -> Option<&str> {
         match self {
-            Item::Story(story) => Some(&story.title.as_ref().unwrap()),
+            Item::Story(story) => {
+                if story.title.as_ref().is_none() {
+                    return Some("story-title-is-none");
+                }
+                return Some(&story.title.as_ref().unwrap());
+            }
             Item::Job(job) => Some(&job.title.as_ref().unwrap()),
             Item::Poll(poll) => Some(&poll.title.as_ref().unwrap()),
             _ => None,
