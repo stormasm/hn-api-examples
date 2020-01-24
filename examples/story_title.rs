@@ -6,6 +6,8 @@ use redis::{Commands, RedisResult};
 use std::fs::File;
 use std::io::{Error, Write};
 
+use serde_json::json;
+
 fn get_hashmap_keys(key: String) -> RedisResult<Vec<u32>> {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
     let pool = r2d2::Pool::builder().build(manager).unwrap();
@@ -38,17 +40,16 @@ fn main() -> Result<(), Error> {
         let story_title = &item.title().unwrap();
 
         if story_title != &no_title {
-            println! {"{}", story_title};
-        }
+            // println! {"{}", story_title};
 
-        /*
-                match story_title {
-                    // no_title => println!("{} {}",key, story_title),
-                    no_title => println!("{}","ok"),
-                    _ => println!("{}", story_title)
-                }
-        */
-        // println!("{}, {:?}", key, item.title().unwrap());
+            let titlejson = json!({
+                "id": key,
+                "title": story_title,
+            });
+
+            // Convert to a string of JSON and print it out
+            println!("{}", titlejson.to_string());
+        }
     }
     output.sync_all()?;
     println!("Number of keys = {}", keys.len());
