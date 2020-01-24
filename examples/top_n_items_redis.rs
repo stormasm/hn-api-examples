@@ -24,7 +24,7 @@ fn write_json_to_redis(key: String, value: String) -> RedisResult<()> {
     let _: () = con.set("hn-story-start", &key)?;
 
     let _x0 = redis::cmd("HSET")
-        .arg("hn-story-19")
+        .arg("hn-story-20")
         .arg(key)
         .arg(value)
         .query::<u64>(&mut *con)
@@ -87,6 +87,6 @@ fn main() {
 
     println!("start id = {}", start_id);
 
-    let item_ids = top_n_items(10000, start_id);
+    let item_ids = top_n_items(20000, start_id);
     process_items(&api, item_ids);
 }
