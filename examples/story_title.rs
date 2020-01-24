@@ -42,13 +42,14 @@ fn main() -> Result<(), Error> {
         if story_title != &no_title {
             // println! {"{}", story_title};
 
-            let titlejson = json!({
+            let title_json = json!({
                 "id": key,
                 "title": story_title,
             });
 
             // Convert to a string of JSON and print it out
-            println!("{}", titlejson.to_string());
+            // println!("{}", title_json.to_string());
+            write!(output, "{}\n", title_json.to_string())?;
         }
     }
     output.sync_all()?;
