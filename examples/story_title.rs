@@ -16,6 +16,8 @@ fn get_hashmap_keys(key: String) -> RedisResult<Vec<u32>> {
 }
 
 fn main() -> Result<(), Error> {
+    let no_title = "story-title-is-none";
+
     let mut keys = get_hashmap_keys("hn-story-20".to_string()).unwrap();
     keys.sort();
 
@@ -31,9 +33,22 @@ fn main() -> Result<(), Error> {
     for key in &keys {
         let value: RedisResult<String> = con.hget("hn-story-20".to_string(), key.to_string());
         let item_json = value.unwrap();
-
         let item: Item = serde_json::from_str(&item_json).unwrap();
-        println!("{}, {:?}", key, item.title().unwrap());
+        // let story_title = &item.title().unwrap();
+        let story_title = &item.title().unwrap();
+
+        if story_title != &no_title {
+            println! {"{}", story_title};
+        }
+
+        /*
+                match story_title {
+                    // no_title => println!("{} {}",key, story_title),
+                    no_title => println!("{}","ok"),
+                    _ => println!("{}", story_title)
+                }
+        */
+        // println!("{}, {:?}", key, item.title().unwrap());
     }
     output.sync_all()?;
     println!("Number of keys = {}", keys.len());
