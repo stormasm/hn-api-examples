@@ -1,9 +1,7 @@
 use hn_api::types::Item;
 use r2d2_redis::{r2d2, RedisConnectionManager};
 use redis::{Commands, RedisResult};
-use serde_json::json;
-use std::fs::File;
-use std::io::{Error, Write};
+use std::io::Error;
 
 fn del_hashmap_key(key: String, field: String) -> RedisResult<()> {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
@@ -35,9 +33,6 @@ fn main() -> Result<(), Error> {
     let pool = pool.clone();
     let mut con = pool.get().unwrap();
 
-    let path = "/tmp13/hackernews-story-archive/data/story-title.json";
-    let mut output = File::create(path)?;
-
     for key in &keys {
         let value: RedisResult<String> = con.hget("hn-story-20".to_string(), key.to_string());
         let item_json = value.unwrap();
@@ -48,7 +43,6 @@ fn main() -> Result<(), Error> {
             let _x = del_hashmap_key("hn-story-20".to_string(), key.to_string());
         }
     }
-    output.sync_all()?;
     println!("Number of keys = {}", keys.len());
     Ok(())
 }
