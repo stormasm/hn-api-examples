@@ -31,6 +31,17 @@ impl Item {
         }
     }
 
+    /// Return the time of this item.
+    pub fn time(&self) -> u64 {
+        match self {
+            Item::Story(story) => story.time,
+            Item::Comment(comment) => comment.time,
+            Item::Job(job) => job.time,
+            Item::Poll(poll) => poll.time,
+            Item::Pollopt(pollopt) => pollopt.time,
+        }
+    }
+
     /// Return the type of this item
     pub fn item_type(&self) -> String {
         match self {
@@ -53,6 +64,20 @@ impl Item {
             }
             Item::Job(job) => Some(&job.title.as_ref().unwrap()),
             Item::Poll(poll) => Some(&poll.title.as_ref().unwrap()),
+            _ => None,
+        }
+    }
+
+    /// Return the title of this item, if available.
+    pub fn url(&self) -> Option<&str> {
+        match self {
+            Item::Story(story) => {
+                if story.url.as_ref().is_none() {
+                    return Some("story-url-is-none");
+                }
+                return Some(&story.url.as_ref().unwrap());
+            }
+            Item::Job(job) => Some(&job.url.as_ref().unwrap()),
             _ => None,
         }
     }
