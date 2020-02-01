@@ -16,6 +16,7 @@ fn get_hashmap_keys(key: String) -> RedisResult<Vec<u32>> {
 
 fn main() -> Result<(), Error> {
     let no_title = "story-title-is-none";
+    let no_url = "story-url-is-none";
 
     let mut keys = get_hashmap_keys("hn-story-20".to_string()).unwrap();
     keys.sort();
@@ -37,7 +38,7 @@ fn main() -> Result<(), Error> {
         let story_time = &item.time();
         let story_url = &item.url().unwrap();
 
-        if story_title != &no_title {
+        if (story_title != &no_title) && (story_url != &no_url) {
             let title_json = json!({
                 "id": key,
                 "title": story_title,
