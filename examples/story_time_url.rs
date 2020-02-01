@@ -36,12 +36,14 @@ fn main() -> Result<(), Error> {
         let item: Item = serde_json::from_str(&item_json).unwrap();
         let story_title = &item.title().unwrap();
         let story_time = &item.time();
+        let story_score = &item.score();
         let story_url = &item.url().unwrap();
 
         if (story_title != &no_title) && (story_url != &no_url) {
             let title_json = json!({
                 "id": key,
                 "title": story_title,
+                "score": story_score,
                 "time": story_time,
                 "url": story_url,
             });

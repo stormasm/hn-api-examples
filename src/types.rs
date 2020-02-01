@@ -31,6 +31,21 @@ impl Item {
         }
     }
 
+    /// Return the score of this item, if available.
+    pub fn score(&self) -> Option<u32> {
+        match self {
+            Item::Story(story) => {
+                if story.score.is_none() {
+                    return Some(123123);
+                }
+                return Some(story.score.unwrap());
+            }
+            Item::Job(job) => Some(job.score.unwrap()),
+            Item::Poll(poll) => Some(poll.score.unwrap()),
+            _ => None,
+        }
+    }
+
     /// Return the time of this item.
     pub fn time(&self) -> u64 {
         match self {
@@ -140,7 +155,7 @@ pub struct Job {
     /// The item's unique id.
     pub id: u32,
     /// The story's score, or the votes for a pollopt.
-    pub score: u32,
+    pub score: Option<u32>,
     /// The job text. HTML.
     pub text: Option<String>,
     /// Creation date of the item, in Unix Time.
@@ -165,7 +180,7 @@ pub struct Poll {
     /// A list of related pollopts, in display order.
     pub parts: Option<Vec<u32>>,
     /// The story's score.
-    pub score: u32,
+    pub score: Option<u32>,
     /// The title of the story.
     pub title: Option<String>,
     /// The story text. HTML.
